@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class EmployeeSystem implements EmployeeManager{
@@ -172,6 +173,33 @@ public class EmployeeSystem implements EmployeeManager{
 
     @Override
     public void deleteEmployee() {
+
+        Iterator<Employee> iterator = employees.iterator();
+
+        System.out.println("Enter the ID of the employee you want to delete: ");
+
+        int id;
+
+        try{
+            id = scanner.nextInt();
+        }
+        catch(Exception e) {
+            System.out.println("Invalid input!");
+            scanner.nextLine();
+            return;
+        }
+
+        while (iterator.hasNext()) {
+
+            Employee employeeToDelete = iterator.next();
+
+            if (employeeToDelete.getId() == id) {
+                iterator.remove();
+                System.out.println("Employee deleted successfully!");
+                return;
+            }
+        }
+        System.out.println("There  is no such employee with that ID");
 
     }
 
