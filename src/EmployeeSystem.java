@@ -33,6 +33,15 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void viewEmployee() {
 
+        if (employees.isEmpty()) {
+            System.out.println("No employee found!");
+            return;
+        }
+
+        for (Employee employee : employees) {
+            System.out.println(employee.toString());
+        }
+
     }
 
     @Override
