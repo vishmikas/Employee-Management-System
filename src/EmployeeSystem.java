@@ -47,6 +47,61 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void searchEmployee() {
 
+        System.out.println("Search employee");
+        System.out.println("1. By ID");
+        System.out.println("2. By Name");
+        System.out.println("Enter your option(1/2): ");
+
+        int option = 0;
+        int id = 0;
+
+        try{
+            option = scanner.nextInt();
+            scanner.nextLine();
+        }
+        catch(Exception e) {
+            System.out.println("Invalid input!");
+        }
+
+        if (option == 1) {
+            System.out.println("Please enter the ID of the employee you want to search: ");
+
+            try{
+                id = scanner.nextInt();
+            }
+            catch (Exception e){
+                System.out.println("Invalid ID");
+            }
+
+            for (Employee employee : employees) {
+                if (employee.getId() == id) {
+                    System.out.println("Employee found!");
+                    System.out.println(employee.toString());
+                    return;
+                }
+                else {
+                    System.out.println("There  is no such employee with that ID");
+                }
+            }
+        }
+        else if (option == 2) {
+            System.out.println("Please enter the first name or last name of the employee you want to search: ");
+            String name = scanner.nextLine().toLowerCase();
+
+            for (Employee employee : employees) {
+                if (employee.getFirstName().toLowerCase().equals(name) || employee.getLastName().toLowerCase().equals(name)) {
+                    System.out.println("Employee found!");
+                    System.out.println(employee.toString());
+                    return;
+                }
+                else {
+                    System.out.println("There  is no such employee with that name");
+                }
+            }
+        }
+        else {
+            System.out.println("Invalid input!");
+        }
     }
 
     @Override
