@@ -1,7 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -236,6 +233,32 @@ public class EmployeeSystem implements EmployeeManager{
 
     @Override
     public void loadFromFile() {
+
+        employees.clear();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("employee.txt"))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                String firstName = data[0];
+                String lastName = data[1];
+                int id = Integer.parseInt(data[2]);
+                String department = data[3];
+                double salary = Double.parseDouble(data[4]);
+
+                employees.add(new Employee(firstName, lastName, id, department, salary));
+            }
+            System.out.println("File loaded successfully!");
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        }
+        catch (IOException e) {
+            System.out.println("Error writing to file!");
+        }
 
     }
 }
