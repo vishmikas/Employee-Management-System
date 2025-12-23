@@ -107,6 +107,67 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void updateEmployee() {
 
+        System.out.println("Enter the ID of the employee you want to update: ");
+        int id = 0;
+
+        try{
+            id = scanner.nextInt();
+        }
+        catch(Exception e) {
+            System.out.println("Invalid ID");
+            return;
+        }
+
+        for (Employee employee : employees) {
+            if (employee.getId() == id) {
+                System.out.println("Employee found!");
+                System.out.println("What component do you want to update?");
+                System.out.println("1. First name");
+                System.out.println("2. Last name");
+                System.out.println("3. Department");
+                System.out.println("4. Salary");
+                System.out.println("Enter your option number: ");
+
+                int option = 0;
+
+                try{
+                    option =scanner.nextInt();
+                    scanner.nextLine();
+                }
+                catch (Exception e){
+                    System.out.println("Invalid input!");
+                    return;
+                }
+
+                switch (option) {
+                    case 1 :
+                        System.out.println("Please enter the first name of the employee you want to update: ");
+                        employee.setFirstName(scanner.nextLine());
+                        System.out.println("First name updated successfully!");
+                        break;
+
+                    case 2 :
+                        System.out.println("Please enter the last name of the employee you want to update: ");
+                        employee.setLastName(scanner.nextLine());
+                        System.out.println("Last name updated successfully!");
+                        break;
+
+                    case 3 :
+                        System.out.println("Please enter the Department of the employee you want to update: ");
+                        employee.setDepartment(scanner.nextLine());
+                        System.out.println("Department updated successfully!");
+                        break;
+
+                    case 4 :
+                        System.out.println("Please enter the Salary of the employee you want to update: ");
+                        employee.setSalary(scanner.nextDouble());
+                        System.out.println("Salary updated successfully!");
+                        break;
+                }
+            }
+        }
+        System.out.println("Updated employee successfully!");
+        return;
     }
 
     @Override
