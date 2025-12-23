@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -205,6 +209,28 @@ public class EmployeeSystem implements EmployeeManager{
 
     @Override
     public void saveToFile() {
+
+        String filePath = "employee.txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Employee employee : employees) {
+                writer.write(
+                        employee.getFirstName() + "," +
+                        employee.getLastName() + "," +
+                        employee.getId() + "," +
+                        employee.getDepartment() + "," +
+                        employee.getSalary() + ","
+                );
+                writer.newLine();
+            }
+            System.out.println("File written successfully!");
+        }
+        catch (FileNotFoundException e){
+            System.out.println("File not found!");
+        }
+        catch (IOException e) {
+            System.out.println("Error writing to file!");
+        }
 
     }
 
