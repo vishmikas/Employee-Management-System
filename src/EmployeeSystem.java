@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,25 +12,41 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void addEmployee() {
 
-        System.out.println("Please enter the first name of the employee you want to add: ");
-        String firstName = scanner.nextLine();
-
-        System.out.println("Please enter the last name of the employee you want to add: ");
-        String lastName = scanner.nextLine();
-
-        System.out.println("Please enter the ID of the employee you want to add: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Please enter the Department of the employee you want to add: ");
-        String department = scanner.nextLine();
-
-        System.out.println("Please enter the Salary of the employee you want to add: ");
-        double salary = scanner.nextDouble();
+        String firstName = JOptionPane.showInputDialog("Enter the first name: ");
+        if (firstName == null || firstName.equals("")) {
+            return;
+        }
+        String lastName = JOptionPane.showInputDialog("Enter the last name: ");
+        if (lastName == null || lastName.equals("")) {
+            return;
+        }
+        String idStr = JOptionPane.showInputDialog("Enter the employee ID: ");
+        if (idStr == null || idStr.equals("")) {
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid employee ID");
+            return;
+        }
+        String department = JOptionPane.showInputDialog("Enter the department name: ");
+        if (department == null || department.equals("")) {
+            return;
+        }
+        String salaryStr = JOptionPane.showInputDialog("Enter the salary: ");
+        if (salaryStr == null || salaryStr.equals("")) {
+            return;
+        }
+        double salary = 0;
+        try {
+            salary = Double.parseDouble(salaryStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid salary");
+        }
 
         employees.add(new Employee(firstName, lastName, id, department, salary));
-        System.out.println("New employee added successfully!");
-
     }
 
     @Override
