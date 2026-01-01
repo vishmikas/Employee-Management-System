@@ -66,60 +66,51 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void searchEmployee() {
 
-        System.out.println("Search employee");
-        System.out.println("1. By ID");
-        System.out.println("2. By Name");
-        System.out.println("Enter your option(1/2): ");
-
-        int option = 0;
-        int id = 0;
-
-        try{
-            option = scanner.nextInt();
-            scanner.nextLine();
+        String optionStr = JOptionPane.showInputDialog("Search Employee\n 1. By ID\n 2. By Name\n Enter your option(1/2): ");
+        if (optionStr == null || optionStr.equals("")) {
+            return;
         }
-        catch(Exception e) {
-            System.out.println("Invalid input!");
+        int option = 0;
+        try {
+            option = Integer.parseInt(optionStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid Input");
+            return;
         }
 
         if (option == 1) {
-            System.out.println("Please enter the ID of the employee you want to search: ");
-
-            try{
-                id = scanner.nextInt();
+            String idStr = JOptionPane.showInputDialog("Enter the employee ID: ");
+            if (idStr == null || idStr.equals("")) {
+                return;
             }
-            catch (Exception e){
-                System.out.println("Invalid ID");
+            int id;
+            try {
+                id = Integer.parseInt(idStr);
+            }  catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid Input");
+                return;
             }
-
-            for (Employee employee : employees) {
+            for(Employee employee : employees) {
                 if (employee.getId() == id) {
-                    System.out.println("Employee found!");
-                    System.out.println(employee.toString());
+                    JOptionPane.showMessageDialog(null, "Employee found!\n" + employee.toString());
                     return;
                 }
-                else {
-                    System.out.println("There  is no such employee with that ID");
-                }
             }
+            JOptionPane.showMessageDialog(null, "Employee not found!");
         }
         else if (option == 2) {
-            System.out.println("Please enter the first name or last name of the employee you want to search: ");
-            String name = scanner.nextLine().toLowerCase();
-
+            String name = JOptionPane.showInputDialog("Please enter the first name or last name of the employee you want to search:");
+            if (name == null) return;
+            name = name.toLowerCase();
             for (Employee employee : employees) {
                 if (employee.getFirstName().toLowerCase().equals(name) || employee.getLastName().toLowerCase().equals(name)) {
-                    System.out.println("Employee found!");
-                    System.out.println(employee.toString());
+                    JOptionPane.showMessageDialog(null, "Employee found!\n" + employee.toString());
                     return;
                 }
-                else {
-                    System.out.println("There  is no such employee with that name");
-                }
             }
-        }
-        else {
-            System.out.println("Invalid input!");
+            JOptionPane.showMessageDialog(null, "There is no such employee with that name");
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid input!");
         }
     }
 
