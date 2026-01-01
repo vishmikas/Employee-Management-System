@@ -53,14 +53,14 @@ public class EmployeeSystem implements EmployeeManager{
     public void viewEmployee() {
 
         if (employees.isEmpty()) {
-            System.out.println("No employee found!");
+            JOptionPane.showMessageDialog(null, "There is no employee with this ID");
             return;
         }
-
+        StringBuilder builder = new StringBuilder();
         for (Employee employee : employees) {
-            System.out.println(employee.toString());
+            builder.append(employee.toString()).append("\n");
         }
-
+        JOptionPane.showMessageDialog(null, builder.toString());
     }
 
     @Override
