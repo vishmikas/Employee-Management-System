@@ -117,98 +117,97 @@ public class EmployeeSystem implements EmployeeManager{
     @Override
     public void updateEmployee() {
 
-        System.out.println("Enter the ID of the employee you want to update: ");
-        int id = 0;
-
-        try{
-            id = scanner.nextInt();
-        }
-        catch(Exception e) {
-            System.out.println("Invalid ID");
+        String idStr = JOptionPane.showInputDialog("Enter the ID of the employee you want to update:");
+        if (idStr == null) return;
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid ID");
             return;
         }
-
+        Employee found = null;
         for (Employee employee : employees) {
             if (employee.getId() == id) {
-                System.out.println("Employee found!");
-                System.out.println("What component do you want to update?");
-                System.out.println("1. First name");
-                System.out.println("2. Last name");
-                System.out.println("3. Department");
-                System.out.println("4. Salary");
-                System.out.println("Enter your option number: ");
-
-                int option = 0;
-
-                try{
-                    option =scanner.nextInt();
-                    scanner.nextLine();
-                }
-                catch (Exception e){
-                    System.out.println("Invalid input!");
-                    return;
-                }
-
-                switch (option) {
-                    case 1 :
-                        System.out.println("Please enter the first name of the employee you want to update: ");
-                        employee.setFirstName(scanner.nextLine());
-                        System.out.println("First name updated successfully!");
-                        break;
-
-                    case 2 :
-                        System.out.println("Please enter the last name of the employee you want to update: ");
-                        employee.setLastName(scanner.nextLine());
-                        System.out.println("Last name updated successfully!");
-                        break;
-
-                    case 3 :
-                        System.out.println("Please enter the Department of the employee you want to update: ");
-                        employee.setDepartment(scanner.nextLine());
-                        System.out.println("Department updated successfully!");
-                        break;
-
-                    case 4 :
-                        System.out.println("Please enter the Salary of the employee you want to update: ");
-                        employee.setSalary(scanner.nextDouble());
-                        System.out.println("Salary updated successfully!");
-                        break;
-                }
+                found = employee;
+                break;
             }
         }
-        System.out.println("Updated employee successfully!");
-        return;
+        if (found == null) {
+            JOptionPane.showMessageDialog(null, "Employee not found!");
+            return;
+        }
+        String optionStr = JOptionPane.showInputDialog("Employee found!\nWhat component do you want to update?\n1. First name\n2. Last name\n3. Department\n4. Salary\nEnter your option number:");
+        if (optionStr == null) return;
+        int option;
+        try {
+            option = Integer.parseInt(optionStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input!");
+            return;
+        }
+        switch (option) {
+            case 1:
+                String firstName = JOptionPane.showInputDialog("Please enter the first name of the employee you want to update:");
+                if (firstName != null) {
+                    found.setFirstName(firstName);
+                    JOptionPane.showMessageDialog(null, "First name updated successfully!");
+                }
+                break;
+            case 2:
+                String lastName = JOptionPane.showInputDialog("Please enter the last name of the employee you want to update:");
+                if (lastName != null) {
+                    found.setLastName(lastName);
+                    JOptionPane.showMessageDialog(null, "Last name updated successfully!");
+                }
+                break;
+            case 3:
+                String department = JOptionPane.showInputDialog("Please enter the Department of the employee you want to update:");
+                if (department != null) {
+                    found.setDepartment(department);
+                    JOptionPane.showMessageDialog(null, "Department updated successfully!");
+                }
+                break;
+            case 4:
+                String salaryStr = JOptionPane.showInputDialog("Please enter the Salary of the employee you want to update:");
+                if (salaryStr != null) {
+                    try {
+                        double salary = Double.parseDouble(salaryStr);
+                        found.setSalary(salary);
+                        JOptionPane.showMessageDialog(null, "Salary updated successfully!");
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid Salary!");
+                    }
+                }
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Invalid option!");
+        }
+        JOptionPane.showMessageDialog(null, "Updated employee successfully!");
     }
 
     @Override
     public void deleteEmployee() {
 
-        Iterator<Employee> iterator = employees.iterator();
-
-        System.out.println("Enter the ID of the employee you want to delete: ");
-
+        String idStr = JOptionPane.showInputDialog("Enter the ID of the employee you want to delete:");
+        if (idStr == null) return;
         int id;
-
-        try{
-            id = scanner.nextInt();
-        }
-        catch(Exception e) {
-            System.out.println("Invalid input!");
-            scanner.nextLine();
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input!");
             return;
         }
-
+        Iterator<Employee> iterator = employees.iterator();
         while (iterator.hasNext()) {
-
             Employee employeeToDelete = iterator.next();
-
             if (employeeToDelete.getId() == id) {
                 iterator.remove();
-                System.out.println("Employee deleted successfully!");
+                JOptionPane.showMessageDialog(null, "Employee deleted successfully!");
                 return;
             }
         }
-        System.out.println("There  is no such employee with that ID");
+        JOptionPane.showMessageDialog(null, "There is no such employee with that ID");
 
     }
 
@@ -228,13 +227,13 @@ public class EmployeeSystem implements EmployeeManager{
                 );
                 writer.newLine();
             }
-            System.out.println("File written successfully!");
+            JOptionPane.showMessageDialog(null, "File written successfully!");
         }
         catch (FileNotFoundException e){
-            System.out.println("File not found!");
+            JOptionPane.showMessageDialog(null, "File not found!");
         }
         catch (IOException e) {
-            System.out.println("Error writing to file!");
+            JOptionPane.showMessageDialog(null, "Error writing to file!");
         }
 
     }
@@ -259,14 +258,13 @@ public class EmployeeSystem implements EmployeeManager{
 
                 employees.add(new Employee(firstName, lastName, id, department, salary));
             }
-            System.out.println("File loaded successfully!");
+            JOptionPane.showMessageDialog(null, "File loaded successfully!");
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "File not found!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading file!");
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Error parsing file data!");
         }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        }
-        catch (IOException e) {
-            System.out.println("Error writing to file!");
-        }
-
     }
 }
